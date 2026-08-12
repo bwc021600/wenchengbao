@@ -1,24 +1,16 @@
 <!DOCTYPE html>
+
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-
-    <meta
-        name="viewport"
-        content="width=device-width, initial-scale=1.0"
-    >
-
-    <meta
-        name="description"
-        content="Personal academic website of Wencheng Bao."
-    >
-
-    <title>Wencheng Bao</title>
-
-    <style>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<meta content="Personal academic website of Wencheng Bao, a Ph.D. student researching stochastic network science; transportation modeling, optimization, and policy; and EV charging behavior and resilience." name="description"/>
+<title>Wencheng Bao</title>
+<style>
         :root {
             --background: #ffffff;
             --surface: #f7f8fa;
+            --surface-hover: #f1f4f7;
             --text: #1f2933;
             --text-secondary: #5f6b76;
             --text-muted: #87929d;
@@ -63,6 +55,12 @@
             text-decoration: underline;
         }
 
+        a:focus-visible,
+        summary:focus-visible {
+            outline: 2px solid var(--accent);
+            outline-offset: 3px;
+        }
+
         /* =========================
            Navigation
         ========================== */
@@ -71,10 +69,8 @@
             position: sticky;
             top: 0;
             z-index: 100;
-
             background: rgba(255, 255, 255, 0.94);
             border-bottom: 1px solid var(--border);
-
             backdrop-filter: blur(10px);
             -webkit-backdrop-filter: blur(10px);
         }
@@ -83,7 +79,6 @@
             display: flex;
             align-items: center;
             justify-content: space-between;
-
             width: min(var(--max-width), calc(100% - 40px));
             min-height: 64px;
             margin: 0 auto;
@@ -132,7 +127,7 @@
         .header-layout {
             display: grid;
             grid-template-columns: minmax(0, 1fr) 180px;
-            align-items: start;
+            align-items: center;
             gap: 52px;
         }
 
@@ -143,7 +138,6 @@
         .photo-container {
             display: flex;
             justify-content: flex-end;
-            padding-top: 7px;
         }
 
         .profile-photo {
@@ -166,26 +160,13 @@
             letter-spacing: -0.045em;
         }
 
-        .position {
-            margin: 17px 0 0;
-            color: var(--text-secondary);
-            font-size: 1.08rem;
-        }
-
-        .institution {
-            margin: 3px 0 0;
-            color: var(--text-secondary);
-            font-size: 1rem;
-        }
-
-        /* Email, GitHub, and Scholar below the name */
+        /* Email, GitHub, LinkedIn, and Scholar below the name */
         .profile-links {
             display: flex;
             flex-wrap: wrap;
             align-items: center;
             gap: 0;
-
-            margin-top: 22px;
+            margin-top: 20px;
             color: var(--text-muted);
             font-size: 0.92rem;
         }
@@ -201,9 +182,21 @@
             color: #b0b7bf;
         }
 
+        .position {
+            margin: 24px 0 0;
+            color: var(--text-secondary);
+            font-size: 1.08rem;
+        }
+
+        .institution {
+            margin: 3px 0 0;
+            color: var(--text-secondary);
+            font-size: 1rem;
+        }
+
         .introduction {
-            max-width: 720px;
-            margin: 31px 0 0;
+            max-width: 680px;
+            margin: 28px 0 0;
             color: var(--text-secondary);
             font-size: 1.03rem;
         }
@@ -219,17 +212,13 @@
             display: inline-flex;
             align-items: center;
             justify-content: center;
-
             min-height: 42px;
             padding: 8px 16px;
-
             border: 1px solid var(--border);
             border-radius: 6px;
-
             font-size: 0.88rem;
             font-weight: 550;
             text-decoration: none;
-
             transition:
                 border-color 150ms ease,
                 background 150ms ease,
@@ -304,147 +293,240 @@
             text-transform: uppercase;
         }
 
-        .section-content p {
+        .section-content > p {
             margin-top: 0;
             color: var(--text-secondary);
         }
 
-        .section-content p:last-child {
+        .section-content > p:last-child {
             margin-bottom: 0;
         }
 
         /* =========================
-           Research interests
+           Research accordion
         ========================== */
 
-        .research-list {
+        .research-intro {
+            margin-bottom: 22px;
+            color: var(--text-secondary);
+            font-size: 0.93rem;
+        }
+
+        .research-accordion {
             display: grid;
-            grid-template-columns: repeat(2, minmax(0, 1fr));
-            gap: 14px;
+            gap: 12px;
+        }
+
+        .research-topic {
+            overflow: hidden;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            background: #ffffff;
+            transition:
+                border-color 150ms ease,
+                box-shadow 150ms ease;
+        }
+
+        .research-topic[open] {
+            border-color: #b9c8dc;
+            box-shadow: 0 8px 24px rgba(31, 41, 51, 0.06);
+        }
+
+        .research-topic summary {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 22px;
+            padding: 20px 21px;
+            cursor: pointer;
+            list-style: none;
+            background: var(--surface);
+            user-select: none;
+        }
+
+        .research-topic summary::-webkit-details-marker {
+            display: none;
+        }
+
+        .research-topic summary:hover {
+            background: var(--surface-hover);
+        }
+
+        .topic-heading {
+            min-width: 0;
+        }
+
+        .topic-number {
+            display: block;
+            margin-bottom: 4px;
+            color: var(--text-muted);
+            font-size: 0.69rem;
+            font-weight: 650;
+            letter-spacing: 0.09em;
+            text-transform: uppercase;
+        }
+
+        .topic-title {
+            display: block;
+            color: var(--text);
+            font-size: 1rem;
+            font-weight: 650;
+            line-height: 1.4;
+        }
+
+        .topic-preview {
+            display: block;
+            margin-top: 4px;
+            color: var(--text-secondary);
+            font-size: 0.82rem;
+            line-height: 1.55;
+        }
+
+        .topic-toggle {
+            flex: 0 0 auto;
+            display: grid;
+            place-items: center;
+            width: 28px;
+            height: 28px;
+            color: var(--accent);
+            border: 1px solid #c9d4e1;
+            border-radius: 50%;
+            font-size: 1.05rem;
+            font-weight: 400;
+            line-height: 1;
+            transition: transform 180ms ease;
+        }
+
+        .research-topic[open] .topic-toggle {
+            transform: rotate(45deg);
+        }
+
+        .topic-body {
+            padding: 23px 21px 8px;
+            border-top: 1px solid var(--border);
+        }
+
+        .research-description {
+            margin-bottom: 24px;
+        }
+
+        .research-description:first-of-type {
+            padding-bottom: 21px;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .content-label {
+            display: block;
+            margin-bottom: 7px;
+            color: var(--text-muted);
+            font-size: 0.68rem;
+            font-weight: 650;
+            letter-spacing: 0.09em;
+            text-transform: uppercase;
+        }
+
+        .research-description p {
+            margin: 0;
+            color: var(--text-secondary);
+            font-size: 0.92rem;
+        }
+
+        .paper-list {
             margin: 0;
             padding: 0;
             list-style: none;
         }
 
-        .research-list li {
-            padding: 18px 19px;
-            border: 1px solid var(--border);
-            border-radius: 7px;
-            background: var(--surface);
+        .paper-item {
+            padding: 19px 0;
+            border-top: 1px solid var(--border);
         }
 
-        .research-list strong {
-            display: block;
-            margin-bottom: 5px;
-            color: var(--text);
-            font-size: 0.94rem;
-            font-weight: 650;
-        }
-
-        .research-list span {
-            display: block;
-            color: var(--text-secondary);
-            font-size: 0.84rem;
-            line-height: 1.6;
-        }
-
-        /* =========================
-           Projects
-        ========================== */
-
-        .project {
-            padding: 0 0 27px;
-            margin-bottom: 27px;
-            border-bottom: 1px solid var(--border);
-        }
-
-        .project:last-child {
-            padding-bottom: 0;
-            margin-bottom: 0;
-            border-bottom: none;
-        }
-
-        .project-header {
-            display: flex;
-            align-items: flex-start;
-            justify-content: space-between;
-            gap: 25px;
-        }
-
-        .project h3 {
+        .paper-title {
             margin: 0;
-            font-size: 1.02rem;
-            font-weight: 650;
-            line-height: 1.5;
-        }
-
-        .project-status {
-            flex: 0 0 auto;
-            margin-top: 2px;
-            color: var(--text-muted);
-            font-size: 0.75rem;
-            text-transform: uppercase;
-            letter-spacing: 0.06em;
-        }
-
-        .project p {
-            margin: 10px 0 11px;
-            color: var(--text-secondary);
+            color: var(--text);
             font-size: 0.92rem;
-        }
-
-        .project-links {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 15px;
-        }
-
-        .project-links a {
-            font-size: 0.84rem;
-            font-weight: 550;
-        }
-
-        /* =========================
-           Publications
-        ========================== */
-
-        .publication {
-            padding-bottom: 26px;
-            margin-bottom: 26px;
-            border-bottom: 1px solid var(--border);
-        }
-
-        .publication:last-child {
-            padding-bottom: 0;
-            margin-bottom: 0;
-            border-bottom: none;
-        }
-
-        .publication-title {
-            margin: 0;
-            color: var(--text);
-            font-size: 0.96rem;
             font-weight: 650;
             line-height: 1.55;
         }
 
-        .publication-authors,
-        .publication-venue {
+        .paper-authors,
+        .paper-venue {
             margin: 4px 0 0;
             color: var(--text-secondary);
-            font-size: 0.87rem;
+            font-size: 0.82rem;
+            line-height: 1.55;
         }
 
-        .publication-links {
+        .paper-venue {
+            color: var(--text-muted);
+        }
+
+        .paper-links {
             display: flex;
             flex-wrap: wrap;
             gap: 14px;
             margin-top: 8px;
         }
 
-        .publication-links a {
-            font-size: 0.82rem;
-            font-weight: 550;
+        .paper-links a {
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+
+        /* =========================
+           Recent news
+        ========================== */
+
+        .news-list {
+            margin: 0;
+            padding: 0;
+            list-style: none;
+        }
+
+        .news-item {
+            display: grid;
+            grid-template-columns: 105px minmax(0, 1fr);
+            gap: 22px;
+            padding: 0 0 24px;
+            margin-bottom: 24px;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .news-item:last-child {
+            padding-bottom: 0;
+            margin-bottom: 0;
+            border-bottom: none;
+        }
+
+        .news-date {
+            color: var(--text-muted);
+            font-size: 0.76rem;
+            font-weight: 650;
+            letter-spacing: 0.045em;
+            text-transform: uppercase;
+        }
+
+        .news-title {
+            margin: 0;
+            color: var(--text);
+            font-size: 0.94rem;
+            font-weight: 650;
+            line-height: 1.55;
+        }
+
+        .news-description {
+            margin: 6px 0 0;
+            color: var(--text-secondary);
+            font-size: 0.87rem;
+            line-height: 1.65;
+        }
+
+        .news-link {
+            display: inline-block;
+            margin-top: 7px;
+            font-size: 0.8rem;
+            font-weight: 600;
         }
 
         /* =========================
@@ -455,7 +537,6 @@
             width: min(var(--max-width), calc(100% - 40px));
             margin: 0 auto;
             padding: 36px 0 46px;
-
             color: var(--text-muted);
             font-size: 0.8rem;
             text-align: center;
@@ -502,7 +583,6 @@
             .photo-container {
                 order: -1;
                 justify-content: flex-start;
-                padding-top: 0;
             }
 
             .profile-photo {
@@ -529,8 +609,17 @@
                 gap: 24px;
             }
 
-            .research-list {
+            .research-topic summary {
+                padding: 18px;
+            }
+
+            .topic-body {
+                padding: 21px 18px 5px;
+            }
+
+            .news-item {
                 grid-template-columns: 1fr;
+                gap: 7px;
             }
         }
 
@@ -544,360 +633,419 @@
                 width: 100%;
             }
 
-            .project-header {
-                flex-direction: column;
-                gap: 5px;
+            .topic-preview {
+                display: none;
+            }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            html {
+                scroll-behavior: auto;
+            }
+
+            *,
+            *::before,
+            *::after {
+                transition-duration: 0.01ms !important;
             }
         }
     </style>
 </head>
-
 <body>
-
-    <nav>
-        <div class="nav-container">
-
-            <a class="nav-name" href="#home">
+<nav>
+<div class="nav-container">
+<a class="nav-name" href="#home">
                 Wencheng Bao
             </a>
-
-            <div class="nav-links">
-                <a href="#about">About</a>
-                <a href="#research">Research</a>
-                <a href="#projects">Projects</a>
-                <a href="#publications">Publications</a>
-            </div>
-
-        </div>
-    </nav>
-
-    <header id="home">
-
-        <div class="header-layout">
-
-            <div class="header-content">
-
-                <h1>Wencheng Bao</h1>
-
-                <div class="profile-links">
-
-                    <a href="mailto:wbao5@illinois.edu">
+<div class="nav-links">
+<a href="#about">About</a>
+<a href="#research">Research</a>
+<a href="#news">Recent News</a>
+</div>
+</div>
+</nav>
+<header id="home">
+<div class="header-layout">
+<div class="header-content">
+<h1>Wencheng Bao</h1>
+<div class="profile-links">
+<a href="mailto:wbao5@illinois.edu">
                         Email
                     </a>
-
-                    <a
-                        href="https://github.com/bwc021600"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                    >
+<a href="https://github.com/bwc021600" rel="noopener noreferrer" target="_blank">
                         GitHub
                     </a>
-
-                    <a
-                        href="https://scholar.google.com/citations?user=iFqunTgAAAAJ&amp;hl=en"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                    >
+<a href="https://www.linkedin.com/in/wencheng-bao/" rel="noopener noreferrer" target="_blank">
+                        LinkedIn
+                    </a>
+<a href="https://scholar.google.com/citations?user=iFqunTgAAAAJ&amp;hl=en" rel="noopener noreferrer" target="_blank">
                         Google Scholar
                     </a>
-
-                </div>
-
-                <p class="position">
+</div>
+<p class="position">
                     Ph.D. Student in Civil and Environmental Engineering
                 </p>
-
-                <p class="institution">
+<p class="institution">
                     University of Illinois Urbana-Champaign
                 </p>
-
-                <p class="introduction">
-                    My research focuses on transportation systems, electric mobility,
-                    optimization under uncertainty, and infrastructure resilience. I
-                    develop mathematical models, computational methods, and data-driven
-                    approaches for transportation and energy applications.
+<p class="introduction">
+                    My research spans three areas: stochastic network science;
+                    transportation modeling, optimization, and policy; and EV
+                    charging behavior and resilience. I develop mathematical
+                    models, computational algorithms, and data-driven methods for
+                    mobility and infrastructure systems operating under uncertainty
+                    and disruption.
                 </p>
-
-                <div class="header-actions">
-
-                    <a
-                        class="button button-primary"
-                        href="cv.pdf"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                    >
+<div class="header-actions">
+<a class="button button-primary" href="cv.pdf" rel="noopener noreferrer" target="_blank">
                         View CV
                     </a>
-
-                    <a class="button button-secondary" href="#projects">
-                        Selected Work
+<a class="button button-secondary" href="#research">
+                        Explore Research
                     </a>
-
-                </div>
-
-            </div>
-
-            <div class="photo-container">
-                <img
-                    class="profile-photo"
-                    src="images/headshot.png"
-                    alt="Portrait of Wencheng Bao"
-                    width="180"
-                    height="225"
-                    loading="eager"
-                    decoding="async"
-                >
-            </div>
-
-        </div>
-
-    </header>
-
-    <main>
-
-        <section id="about">
-            <div class="section-grid">
-
-                <div class="section-title">
-                    <span>01</span>
-                    <h2>About</h2>
-                </div>
-
-                <div class="section-content">
-                    <p>
+</div>
+</div>
+<div class="photo-container">
+<img alt="Wencheng Bao" class="profile-photo" decoding="async" height="225" loading="eager" src="images/headshot.png" width="180"/>
+</div>
+</div>
+</header>
+<main>
+<section id="about">
+<div class="section-grid">
+<div class="section-title">
+<span>01</span>
+<h2>About</h2>
+</div>
+<div class="section-content">
+<p>
                         I am a Ph.D. student in Civil and Environmental
                         Engineering at the University of Illinois
                         Urbana-Champaign. My work lies at the intersection of
                         transportation engineering, operations research,
-                        electric mobility, and data analytics.
+                        electric mobility, network science, and data analytics.
                     </p>
-
-                    <p>
-                        I am particularly interested in how uncertainty,
-                        traveler behavior, charging demand, infrastructure
-                        disruptions, and decentralized decision-making affect
-                        the performance of transportation and energy systems.
+<p>
+                        I study how uncertainty, traveler behavior, charging
+                        demand, infrastructure disruptions, and decentralized
+                        decisions affect transportation and energy systems. My
+                        goal is to develop methods that support more reliable,
+                        resilient, and efficient mobility systems.
                     </p>
-                </div>
+</div>
+</div>
+</section>
+<section id="research">
+<div class="section-grid">
+<div class="section-title">
+<span>02</span>
+<h2>Research</h2>
+</div>
+<div class="section-content">
+<p class="research-intro">Select a research area to view the field problem and the corresponding publications.</p>
+<div class="research-accordion">
+<details class="research-topic">
+<summary>
+<span class="topic-heading">
+<span class="topic-number">Area 01</span>
+<span class="topic-title">
+                                        Stochastic Network Science
+                                    </span>
+<span class="topic-preview">
+                                        Centrality and critical-node identification
+                                        when network structure is uncertain.
+                                    </span>
+</span>
+<span aria-hidden="true" class="topic-toggle">
+                                    +
+                                </span>
+</summary>
+<div class="topic-body">
+<div class="research-description">
+<span class="content-label">
+                                        Research Problem
+                                    </span>
+<p>
+                                        Classical network measures usually assume a
+                                        fixed graph. In real infrastructure, mobility,
+                                        and social networks, however, links may fail,
+                                        weights may change, and the most central node
+                                        may vary across realizations. The resulting
+                                        challenge is to identify nodes that remain
+                                        important across uncertain network states and
+                                        to determine whether their rankings are robust
+                                        to model and sampling error.
+                                    </p>
+</div>
 
-            </div>
-        </section>
+<span class="content-label">
+                                    Selected Publications
+                                </span>
+<ul class="paper-list">
+<li class="paper-item">
+<p class="paper-title">
+                                            Betweenness Central Nodes Under
+                                            Uncertainty: An Absorbing Markov Chain
+                                            Approach
+                                        </p>
+<p class="paper-authors">
+                                            Wencheng Bao, Eleftheria Kontou, and
+                                            Chrysafis Vogiatzis
+                                        </p>
+<p class="paper-venue">
+                                            arXiv preprint and Optimization Online,
+                                            2026
+                                        </p>
+<div class="paper-links">
+<a href="https://arxiv.org/abs/2605.14743" rel="noopener noreferrer" target="_blank">
+                                                arXiv
+                                            </a>
+<a href="https://optimization-online.org/2026/05/betweenness-central-nodes-under-uncertainty-an-absorbing-markov-chain-approach/" rel="noopener noreferrer" target="_blank">
+                                                Optimization Online
+                                            </a>
+<a href="https://github.com/bwc021600/Absorbing-Frequency-Centrality-for-Stochastic-Networks" rel="noopener noreferrer" target="_blank">
+                                                Code
+                                            </a>
+</div>
+</li>
+</ul>
+</div>
+</details>
+<details class="research-topic">
+<summary>
+<span class="topic-heading">
+<span class="topic-number">Area 02</span>
+<span class="topic-title">
+                                        Transportation Modeling, Optimization &amp;
+                                        Policy
+                                    </span>
+<span class="topic-preview">
+                                        Traveler behavior, resilient network design,
+                                        and multimodal policy evaluation.
+                                    </span>
+</span>
+<span aria-hidden="true" class="topic-toggle">
+                                    +
+                                </span>
+</summary>
+<div class="topic-body">
+<div class="research-description">
+<span class="content-label">
+                                        Research Problem
+                                    </span>
+<p>
+                                        Transportation outcomes emerge from the
+                                        interaction of traveler decisions, congestion,
+                                        infrastructure capacity, hazards, and public
+                                        policy. Expected-cost models can understate
+                                        severe travel-time outcomes, infrastructure
+                                        planning can overlook behavioral feedback, and
+                                        average policy evaluations can conceal large
+                                        differences across weather conditions and time
+                                        periods.
+                                    </p>
+</div>
 
-        <section id="research">
-            <div class="section-grid">
+<span class="content-label">
+                                    Selected Publications
+                                </span>
+<ul class="paper-list">
+<li class="paper-item">
+<p class="paper-title">
+                                            Risk-Averse Stochastic User Equilibrium
+                                            on Uncertain Transportation Networks
+                                        </p>
+<p class="paper-authors">
+                                            Wencheng Bao, Chrysafis Vogiatzis, and
+                                            Eleftheria Kontou
+                                        </p>
+<p class="paper-venue">
+                                            arXiv preprint and Optimization Online,
+                                            2026
+                                        </p>
+<div class="paper-links">
+<a href="https://arxiv.org/abs/2603.20207" rel="noopener noreferrer" target="_blank">
+                                                arXiv
+                                            </a>
+<a href="https://optimization-online.org/2026/03/risk-averse-stochastic-user-equilibrium-on-uncertain-transportation-networks/" rel="noopener noreferrer" target="_blank">
+                                                Optimization Online
+                                            </a>
+</div>
+</li>
+<li class="paper-item">
+<p class="paper-title">
+                                            A Bilevel Optimization Framework for
+                                            Flood Resilient Electric Vehicle
+                                            Infrastructure on Urban Transport
+                                            Networks
+                                        </p>
+<p class="paper-authors">
+                                            Wencheng Bao and Eleftheria Kontou
+                                        </p>
+<p class="paper-venue">
+                                            SSRN working paper, 2026
+                                        </p>
+<div class="paper-links">
+<a href="https://doi.org/10.2139/ssrn.6574364" rel="noopener noreferrer" target="_blank">
+                                                SSRN
+                                            </a>
+</div>
+</li>
+<li class="paper-item">
+<p class="paper-title">
+                                            Weather-Time Heterogeneity in Congestion
+                                            Pricing Effects: Evidence from New York
+                                            City
+                                        </p>
+<p class="paper-authors">
+                                            Wencheng Bao and Shanshan Liu
+                                        </p>
+<p class="paper-venue">
+                                            Working paper; submitted to the 2027
+                                            Transportation Research Board Annual
+                                            Meeting, 2026
+                                        </p>
+</li>
+</ul>
+</div>
+</details>
+<details class="research-topic">
+<summary>
+<span class="topic-heading">
+<span class="topic-number">Area 03</span>
+<span class="topic-title">
+                                        EV Charging Behavior &amp; Resilience
+                                    </span>
+<span class="topic-preview">
+                                        Charging-demand heterogeneity, hazard
+                                        exposure, and infrastructure reliability.
+                                    </span>
+</span>
+<span aria-hidden="true" class="topic-toggle">
+                                    +
+                                </span>
+</summary>
+<div class="topic-body">
+<div class="research-description">
+<span class="content-label">
+                                        Research Problem
+                                    </span>
+<p>
+                                        Electric vehicle charging demand varies
+                                        substantially across households, times of day,
+                                        and operating conditions, while charging
+                                        infrastructure remains exposed to natural
+                                        hazards and power outages. Aggregate averages
+                                        can therefore hide distinct charging profiles
+                                        and vulnerable locations, complicating demand
+                                        forecasting, grid planning, and resilience
+                                        investment.
+                                    </p>
+</div>
 
-                <div class="section-title">
-                    <span>02</span>
-                    <h2>Research</h2>
-                </div>
-
-                <div class="section-content">
-
-                    <ul class="research-list">
-
-                        <li>
-                            <strong>Transportation Networks</strong>
-                            <span>
-                                Traffic assignment, route choice, congestion,
-                                and network performance.
-                            </span>
-                        </li>
-
-                        <li>
-                            <strong>Electric Mobility</strong>
-                            <span>
-                                EV charging behavior, infrastructure planning,
-                                and fleet electrification.
-                            </span>
-                        </li>
-
-                        <li>
-                            <strong>Optimization Under Uncertainty</strong>
-                            <span>
-                                Stochastic, robust, distributionally robust,
-                                and risk-aware optimization.
-                            </span>
-                        </li>
-
-                        <li>
-                            <strong>Infrastructure Resilience</strong>
-                            <span>
-                                Transportation and energy system responses to
-                                hazards and disruptions.
-                            </span>
-                        </li>
-
-                    </ul>
-
-                </div>
-
-            </div>
-        </section>
-
-        <section id="projects">
-            <div class="section-grid">
-
-                <div class="section-title">
-                    <span>03</span>
-                    <h2>Selected Projects</h2>
-                </div>
-
-                <div class="section-content">
-
-                    <article class="project">
-
-                        <div class="project-header">
-                            <h3>
-                                Risk-Aware Stochastic User Equilibrium on
-                                Uncertain Transportation Networks
-                            </h3>
-
-                            <span class="project-status">
-                                Research
-                            </span>
-                        </div>
-
-                        <p>
-                            Development of stochastic equilibrium and
-                            risk-aware optimization models for transportation
-                            networks with uncertain and heavy-tailed travel
-                            times.
-                        </p>
-
-                        <div class="project-links">
-                            <a href="#">Paper</a>
-                            <a href="#">Code</a>
-                        </div>
-
-                    </article>
-
-                    <article class="project">
-
-                        <div class="project-header">
-                            <h3>
-                                Electric Vehicle Charging Behavior During
-                                Extreme Events
-                            </h3>
-
-                            <span class="project-status">
-                                Data Study
-                            </span>
-                        </div>
-
-                        <p>
-                            Analysis of residential EV charging behavior
-                            before, during, and after extreme weather events
-                            and power-system disruptions.
-                        </p>
-
-                        <div class="project-links">
-                            <a href="#">Project</a>
-                            <a href="#">Paper</a>
-                        </div>
-
-                    </article>
-
-                    <article class="project">
-
-                        <div class="project-header">
-                            <h3>
-                                Electric Fleet and Charging Infrastructure
-                                Optimization
-                            </h3>
-
-                            <span class="project-status">
-                                Optimization
-                            </span>
-                        </div>
-
-                        <p>
-                            Optimization and game-theoretic models for fleet
-                            charging, infrastructure investment, pricing, and
-                            decentralized decision-making.
-                        </p>
-
-                        <div class="project-links">
-                            <a href="#">Project</a>
-                            <a href="#">Code</a>
-                        </div>
-
-                    </article>
-
-                </div>
-
-            </div>
-        </section>
-
-        <section id="publications">
-            <div class="section-grid">
-
-                <div class="section-title">
-                    <span>04</span>
-                    <h2>Publications</h2>
-                </div>
-
-                <div class="section-content">
-
-                    <article class="publication">
-
-                        <p class="publication-title">
-                            Risk-Aware Stochastic User Equilibrium on
-                            Uncertain Transportation Networks
-                        </p>
-
-                        <p class="publication-authors">
-                            Wencheng Bao and coauthors
-                        </p>
-
-                        <p class="publication-venue">
-                            Working paper
-                        </p>
-
-                        <div class="publication-links">
-                            <a href="#">PDF</a>
-                            <a href="#">arXiv</a>
-                            <a href="#">Code</a>
-                        </div>
-
-                    </article>
-
-                    <article class="publication">
-
-                        <p class="publication-title">
-                            Add another publication title here
-                        </p>
-
-                        <p class="publication-authors">
-                            Author names
-                        </p>
-
-                        <p class="publication-venue">
-                            Journal or conference, year
-                        </p>
-
-                        <div class="publication-links">
-                            <a href="#">PDF</a>
-                            <a href="#">DOI</a>
-                        </div>
-
-                    </article>
-
-                </div>
-
-            </div>
-        </section>
-
-    </main>
-
-    <footer>
+<span class="content-label">
+                                    Selected Publications
+                                </span>
+<ul class="paper-list">
+<li class="paper-item">
+<p class="paper-title">
+                                            Electric Vehicle Charging Stations at
+                                            Risk from Hazardous Events and Power
+                                            Outages: Analytics and Resilience
+                                            Implications
+                                        </p>
+<p class="paper-authors">
+                                            Wencheng Bao and Eleftheria Kontou
+                                        </p>
+<p class="paper-venue">
+                                            Renewable and Sustainable Energy Reviews,
+                                            Volume 226, Article 116144, 2026
+                                        </p>
+<div class="paper-links">
+<a href="https://doi.org/10.1016/j.rser.2025.116144" rel="noopener noreferrer" target="_blank">
+                                                Article
+                                            </a>
+<a href="https://doi.org/10.13012/B2IDB-9109358_V1" rel="noopener noreferrer" target="_blank">
+                                                Data &amp; Code
+                                            </a>
+</div>
+</li>
+<li class="paper-item">
+<p class="paper-title">
+                                            Clustering Household Electric Vehicle
+                                            Home-Charging Behavior Using Longitudinal
+                                            Hourly Charging Data in Texas, Austin
+                                        </p>
+<p class="paper-authors">
+                                            Wencheng Bao and Eleftheria Kontou
+                                        </p>
+<p class="paper-venue">
+                                            Working paper, 2026
+                                        </p>
+</li>
+</ul>
+</div>
+</details>
+</div>
+</div>
+</div>
+</section>
+<section id="news">
+<div class="section-grid">
+<div class="section-title">
+<span>03</span>
+<h2>Recent News</h2>
+</div>
+<div class="section-content">
+<ul class="news-list">
+<li class="news-item">
+<div class="news-date">
+                                November 2026
+                            </div>
+<div>
+<p class="news-title">
+                                    Upcoming presentation at the 2026 INFORMS
+                                    Annual Meeting.
+                                </p>
+<p class="news-description">
+                                    I will present in the invited session
+                                    “Traffic Assignment and Network Equilibrium”
+                                    at the 2026 INFORMS Annual Meeting in San
+                                    Francisco, California. The session is scheduled
+                                    for Monday, November 2, from 1:15 PM to
+                                    2:30 PM.
+                                </p>
+</div>
+</li>
+</ul>
+</div>
+</div>
+</section>
+</main>
+<footer>
         © <span id="current-year">2026</span> Wencheng Bao.
         Hosted with GitHub Pages.
     </footer>
-
-    <script>
+<script>
         document.getElementById("current-year").textContent =
             new Date().getFullYear();
-    </script>
 
+        /* Keep only one research area open at a time. */
+        const researchTopics = document.querySelectorAll(".research-topic");
+
+        researchTopics.forEach((topic) => {
+            topic.addEventListener("toggle", () => {
+                if (!topic.open) {
+                    return;
+                }
+
+                researchTopics.forEach((otherTopic) => {
+                    if (otherTopic !== topic) {
+                        otherTopic.removeAttribute("open");
+                    }
+                });
+            });
+        });
+    </script>
 </body>
 </html>
