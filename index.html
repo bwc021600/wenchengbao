@@ -406,13 +406,18 @@
             border-top: 1px solid var(--border);
         }
 
-        .research-description {
-            margin-bottom: 24px;
+        .topic-overview {
+            display: grid;
+            grid-template-columns: minmax(0, 1fr) minmax(260px, 340px);
+            align-items: start;
+            gap: 24px;
+            margin-bottom: 28px;
+            padding-bottom: 24px;
+            border-bottom: 1px solid var(--border);
         }
 
-        .research-description:first-of-type {
-            padding-bottom: 21px;
-            border-bottom: 1px solid var(--border);
+        .research-description {
+            margin: 0;
         }
 
         .content-label {
@@ -429,6 +434,49 @@
             margin: 0;
             color: var(--text-secondary);
             font-size: 0.92rem;
+        }
+
+        .research-visual {
+            margin: 0 0 28px;
+        }
+
+        .research-visual-link {
+            display: block;
+            overflow: hidden;
+            border-radius: 8px;
+            text-decoration: none;
+        }
+
+        .research-visual-link:hover {
+            text-decoration: none;
+        }
+
+        .research-visual img {
+            display: block;
+            width: 100%;
+            height: auto;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            background: var(--surface);
+            box-shadow: 0 8px 22px rgba(31, 41, 51, 0.08);
+            transition:
+                transform 180ms ease,
+                box-shadow 180ms ease,
+                border-color 180ms ease;
+        }
+
+        .research-visual-link:hover img {
+            border-color: #b9c8dc;
+            box-shadow: 0 12px 28px rgba(31, 41, 51, 0.12);
+            transform: translateY(-2px);
+        }
+
+        .research-visual figcaption {
+            margin-top: 8px;
+            color: var(--text-muted);
+            font-size: 0.75rem;
+            line-height: 1.5;
+            text-align: center;
         }
 
         .paper-list {
@@ -617,6 +665,11 @@
                 padding: 21px 18px 5px;
             }
 
+            .topic-overview {
+                grid-template-columns: 1fr;
+                gap: 18px;
+            }
+
             .news-item {
                 grid-template-columns: 1fr;
                 gap: 7px;
@@ -742,7 +795,7 @@
 <h2>Research</h2>
 </div>
 <div class="section-content">
-<p class="research-intro">Select a research area to view the field problem and the corresponding publications.</p>
+<p class="research-intro">Select a research area to view the field problem, visual overview, and corresponding publications.</p>
 <div class="research-accordion">
 <details class="research-topic">
 <summary>
@@ -761,13 +814,24 @@
                                 </span>
 </summary>
 <div class="topic-body">
+<div class="topic-overview">
 <div class="research-description">
 <span class="content-label">
                                         Research Problem
                                     </span>
 <p>
-                                      A **stochastic network** incorporates randomness and probability distributions into its structure or attributes—such as treating edge existence, capacities, flow demands, or travel times as random variables rather than fixed values. We study them because real-world complex systems like transportation grids, communication networks, and power infrastructure are inherently subject to unpredictable demand shifts, weather disruptions, and random failures. By explicitly modeling these uncertainties, researchers can quantify system reliability, evaluate resilience under extreme events, and design robust, risk-averse decision-making strategies that prevent fragile failures in dynamic environments.
+                                      A <strong>stochastic network</strong> incorporates randomness and probability distributions into its structure or attributes—such as treating edge existence, capacities, flow demands, or travel times as random variables rather than fixed values. We study them because real-world complex systems like transportation grids, communication networks, and power infrastructure are inherently subject to unpredictable demand shifts, weather disruptions, and random failures. By explicitly modeling these uncertainties, researchers can quantify system reliability, evaluate resilience under extreme events, and design robust, risk-averse decision-making strategies that prevent fragile failures in dynamic environments.
                                     </p>
+</div>
+<figure class="research-visual">
+<span class="content-label">
+                                    Visual Overview
+                                </span>
+<a aria-label="Open the full-size stochastic network illustration" class="research-visual-link" href="images/Network.png" rel="noopener noreferrer" target="_blank">
+<img alt="Cartoon infographic illustrating stochastic networks, uncertain links, random demand, weather disruptions, reliability, resilience, and robust decisions" decoding="async" loading="lazy" src="images/Network.png"/>
+</a>
+<figcaption>Click the image to view it at full size.</figcaption>
+</figure>
 </div>
 
 <span class="content-label">
@@ -819,13 +883,24 @@
                                 </span>
 </summary>
 <div class="topic-body">
+<div class="topic-overview">
 <div class="research-description">
 <span class="content-label">
                                         Research Problem
                                     </span>
 <p>
-                                        A **transportation system** is an integrated network of physical infrastructure, vehicles, and mobility demands designed to move people and goods efficiently across space and time. We study these systems to maximize societal mobility, economic productivity, and network resilience by optimizing strategic infrastructure planning, such as solving facility location problems for EV charging stations or logistics hubs, and by understanding decentralized user behavior, like modeling user equilibrium to predict how self-interested route choices shape overall traffic flow. Ultimately, analyzing these mechanics allows planners to align system investments with actual human behavior to build efficient, robust transportation networks.
+                                        A <strong>transportation system</strong> is an integrated network of physical infrastructure, vehicles, and mobility demands designed to move people and goods efficiently across space and time. We study these systems to maximize societal mobility, economic productivity, and network resilience by optimizing strategic infrastructure planning, such as solving facility location problems for EV charging stations or logistics hubs, and by understanding decentralized user behavior, like modeling user equilibrium to predict how self-interested route choices shape overall traffic flow. Ultimately, analyzing these mechanics allows planners to align system investments with actual human behavior to build efficient, robust transportation networks.
                                     </p>
+</div>
+<figure class="research-visual">
+<span class="content-label">
+                                    Visual Overview
+                                </span>
+<a aria-label="Open the full-size transportation systems illustration" class="research-visual-link" href="images/Transportation%20System.png" rel="noopener noreferrer" target="_blank">
+<img alt="Cartoon infographic illustrating transportation infrastructure, vehicles, mobility demand, facility location, user equilibrium, planning, efficiency, resilience, and investment" decoding="async" loading="lazy" src="images/Transportation%20System.png"/>
+</a>
+<figcaption>Click the image to view it at full size.</figcaption>
+</figure>
 </div>
 
 <span class="content-label">
@@ -908,13 +983,24 @@
                                 </span>
 </summary>
 <div class="topic-body">
+<div class="topic-overview">
 <div class="research-description">
 <span class="content-label">
                                         Research Problem
                                     </span>
 <p>
-                                        A **Electrification system** couples power grids with mobility networks through electric vehicle infrastructure and dynamic driver charging behaviors. We study electric vehicle infrastructure and user charging patterns because mass adoption fundamentally transforms both traffic networks and power grids, creating unprecedented spatial-temporal electricity demand peaks that can strain local transformers and cause severe grid congestion if left unmanaged. 
+                                        A <strong>transportation electrification system</strong> couples power grids with mobility networks through electric vehicle infrastructure and dynamic driver charging behaviors. We study electric vehicle infrastructure and user charging patterns because mass adoption fundamentally transforms both traffic networks and power grids, creating unprecedented spatial-temporal electricity demand peaks that can strain local transformers and cause severe grid congestion if left unmanaged.
                                     </p>
+</div>
+<figure class="research-visual">
+<span class="content-label">
+                                    Visual Overview
+                                </span>
+<a aria-label="Open the full-size transportation electrification illustration" class="research-visual-link" href="images/EV.png" rel="noopener noreferrer" target="_blank">
+<img alt="Cartoon infographic illustrating the coupling of electric mobility networks, charging infrastructure, driver charging behavior, and electric power grids" decoding="async" loading="lazy" src="images/EV.png"/>
+</a>
+<figcaption>Click the image to view it at full size.</figcaption>
+</figure>
 </div>
 
 <span class="content-label">
