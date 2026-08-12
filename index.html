@@ -1,125 +1,1560 @@
 <!DOCTYPE html>
-<html lang="zh-CN">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
 
-    <!-- 让网站在手机上正常显示 -->
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
 
-    <title>你的名字 | Personal Website</title>
+    <meta
+        name="description"
+        content="Personal academic website of Wencheng Bao, a researcher in transportation systems, electric mobility, optimization, and infrastructure resilience."
+    >
+
+    <title>Wencheng Bao | Research Portfolio</title>
+
+    <!-- Futuristic fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Orbitron:wght@500;600;700&display=swap"
+        rel="stylesheet"
+    >
 
     <style>
+        :root {
+            --background: #040711;
+            --background-soft: #080d1c;
+            --surface: rgba(13, 22, 45, 0.68);
+            --surface-strong: rgba(16, 27, 54, 0.9);
+
+            --border: rgba(116, 225, 255, 0.17);
+            --border-bright: rgba(116, 225, 255, 0.42);
+
+            --text: #edf8ff;
+            --text-secondary: #a8b9cc;
+            --text-muted: #70839b;
+
+            --cyan: #63f2ff;
+            --blue: #578cff;
+            --violet: #9b7cff;
+            --pink: #ff70d2;
+
+            --shadow:
+                0 25px 70px rgba(0, 0, 0, 0.36),
+                0 0 40px rgba(76, 155, 255, 0.06);
+
+            --mouse-x: 50vw;
+            --mouse-y: 30vh;
+        }
+
         * {
             box-sizing: border-box;
         }
 
+        html {
+            scroll-behavior: smooth;
+            scroll-padding-top: 90px;
+        }
+
         body {
             margin: 0;
-            font-family: Arial, Helvetica, sans-serif;
+            min-height: 100vh;
+            overflow-x: hidden;
+
+            font-family: "Inter", Arial, Helvetica, sans-serif;
             line-height: 1.7;
-            color: #222;
-            background: #f5f6f8;
+
+            color: var(--text);
+            background:
+                radial-gradient(
+                    circle at 15% 5%,
+                    rgba(87, 140, 255, 0.14),
+                    transparent 28rem
+                ),
+                radial-gradient(
+                    circle at 85% 20%,
+                    rgba(155, 124, 255, 0.11),
+                    transparent 30rem
+                ),
+                var(--background);
         }
 
-        header {
-            background: #1f2937;
-            color: white;
-            text-align: center;
-            padding: 70px 20px;
+        /* Futuristic background grid */
+        body::before {
+            content: "";
+            position: fixed;
+            inset: 0;
+            z-index: -3;
+            pointer-events: none;
+
+            background-image:
+                linear-gradient(
+                    rgba(99, 242, 255, 0.045) 1px,
+                    transparent 1px
+                ),
+                linear-gradient(
+                    90deg,
+                    rgba(99, 242, 255, 0.045) 1px,
+                    transparent 1px
+                );
+
+            background-size: 52px 52px;
+
+            -webkit-mask-image:
+                linear-gradient(
+                    to bottom,
+                    rgba(0, 0, 0, 0.95),
+                    transparent 90%
+                );
+
+            mask-image:
+                linear-gradient(
+                    to bottom,
+                    rgba(0, 0, 0, 0.95),
+                    transparent 90%
+                );
         }
 
-        header h1 {
-            margin: 0;
-            font-size: 2.5rem;
+        /* Mouse-following glow */
+        body::after {
+            content: "";
+            position: fixed;
+            inset: 0;
+            z-index: -2;
+            pointer-events: none;
+
+            background:
+                radial-gradient(
+                    450px circle at var(--mouse-x) var(--mouse-y),
+                    rgba(99, 242, 255, 0.075),
+                    transparent 50%
+                );
         }
 
-        header p {
-            margin-top: 12px;
-            color: #d1d5db;
-            font-size: 1.1rem;
+        a {
+            color: inherit;
         }
 
-        nav {
-            background: white;
-            text-align: center;
-            padding: 15px;
-            border-bottom: 1px solid #ddd;
-            position: sticky;
+        a:focus-visible,
+        button:focus-visible {
+            outline: 2px solid var(--cyan);
+            outline-offset: 4px;
+        }
+
+        ::selection {
+            color: #041018;
+            background: var(--cyan);
+        }
+
+        /* Decorative aurora */
+        .aurora {
+            position: fixed;
+            z-index: -4;
+            border-radius: 50%;
+            filter: blur(100px);
+            pointer-events: none;
+            opacity: 0.34;
+        }
+
+        .aurora-one {
+            top: 7%;
+            left: -170px;
+            width: 430px;
+            height: 430px;
+            background: rgba(31, 129, 255, 0.35);
+            animation: aurora-drift-one 13s ease-in-out infinite alternate;
+        }
+
+        .aurora-two {
+            top: 37%;
+            right: -180px;
+            width: 450px;
+            height: 450px;
+            background: rgba(132, 77, 255, 0.28);
+            animation: aurora-drift-two 16s ease-in-out infinite alternate;
+        }
+
+        .aurora-three {
+            bottom: -240px;
+            left: 28%;
+            width: 500px;
+            height: 500px;
+            background: rgba(0, 214, 221, 0.17);
+            animation: aurora-drift-three 18s ease-in-out infinite alternate;
+        }
+
+        /* =========================
+           Navigation
+        ========================== */
+
+        .site-nav {
+            position: fixed;
             top: 0;
+            left: 0;
+            z-index: 1000;
+
+            width: 100%;
+            border-bottom: 1px solid rgba(99, 242, 255, 0.1);
+
+            background: rgba(4, 7, 17, 0.68);
+
+            -webkit-backdrop-filter: blur(18px);
+            backdrop-filter: blur(18px);
         }
 
-        nav a {
-            margin: 0 15px;
-            color: #2563eb;
+        .nav-inner {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+
+            width: min(1180px, calc(100% - 40px));
+            min-height: 70px;
+            margin: 0 auto;
+        }
+
+        .logo {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+
+            font-family: "Orbitron", sans-serif;
+            font-size: 0.92rem;
+            font-weight: 700;
+            letter-spacing: 0.13em;
             text-decoration: none;
-            font-weight: bold;
         }
 
-        nav a:hover {
-            text-decoration: underline;
+        .logo-symbol {
+            position: relative;
+
+            display: grid;
+            place-items: center;
+
+            width: 34px;
+            height: 34px;
+
+            color: var(--cyan);
+            border: 1px solid var(--border-bright);
+            border-radius: 9px;
+
+            background: rgba(99, 242, 255, 0.06);
+            box-shadow:
+                inset 0 0 18px rgba(99, 242, 255, 0.05),
+                0 0 18px rgba(99, 242, 255, 0.07);
         }
 
-        main {
-            max-width: 900px;
-            margin: 35px auto;
-            padding: 0 20px;
+        .logo-symbol::after {
+            content: "";
+            position: absolute;
+            top: -3px;
+            right: -3px;
+
+            width: 7px;
+            height: 7px;
+
+            border-radius: 50%;
+            background: var(--cyan);
+            box-shadow: 0 0 12px var(--cyan);
         }
 
-        section {
-            background: white;
-            margin-bottom: 25px;
-            padding: 30px;
-            border-radius: 10px;
-            box-shadow: 0 3px 12px rgba(0, 0, 0, 0.08);
+        .logo-subtitle {
+            color: var(--text-muted);
+            font-family: "Inter", sans-serif;
+            font-size: 0.65rem;
+            font-weight: 500;
+            letter-spacing: 0.12em;
         }
 
-        h2 {
-            margin-top: 0;
-            color: #111827;
-            border-bottom: 2px solid #e5e7eb;
-            padding-bottom: 10px;
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 30px;
         }
 
-        .project {
-            margin-bottom: 22px;
+        .nav-links a {
+            position: relative;
+
+            color: var(--text-secondary);
+            font-size: 0.81rem;
+            font-weight: 600;
+            letter-spacing: 0.07em;
+            text-decoration: none;
+            text-transform: uppercase;
+
+            transition:
+                color 180ms ease,
+                transform 180ms ease;
         }
 
-        .project h3 {
-            margin-bottom: 5px;
+        .nav-links a::after {
+            content: "";
+            position: absolute;
+            right: 0;
+            bottom: -8px;
+            left: 0;
+
+            height: 1px;
+
+            background:
+                linear-gradient(
+                    90deg,
+                    transparent,
+                    var(--cyan),
+                    transparent
+                );
+
+            transform: scaleX(0);
+            transition: transform 180ms ease;
+        }
+
+        .nav-links a:hover {
+            color: var(--cyan);
+            transform: translateY(-1px);
+        }
+
+        .nav-links a:hover::after {
+            transform: scaleX(1);
+        }
+
+        /* =========================
+           Hero section
+        ========================== */
+
+        .hero {
+            position: relative;
+            display: grid;
+            place-items: center;
+
+            min-height: 100svh;
+            padding: 120px 24px 80px;
+
+            isolation: isolate;
+        }
+
+        /* Subtle scan lines */
+        .hero::after {
+            content: "";
+            position: absolute;
+            inset: 0;
+            z-index: -1;
+            pointer-events: none;
+
+            background:
+                repeating-linear-gradient(
+                    to bottom,
+                    transparent 0,
+                    transparent 6px,
+                    rgba(135, 238, 255, 0.012) 7px
+                );
+        }
+
+        .hero-content {
+            width: min(980px, 100%);
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .eyebrow {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+
+            margin: 0 0 22px;
+            padding: 8px 14px;
+
+            color: var(--cyan);
+            border: 1px solid var(--border);
+            border-radius: 100px;
+
+            background: rgba(99, 242, 255, 0.045);
+
+            font-family: "Orbitron", sans-serif;
+            font-size: 0.68rem;
+            font-weight: 600;
+            letter-spacing: 0.17em;
+            text-transform: uppercase;
+        }
+
+        .eyebrow-indicator {
+            width: 7px;
+            height: 7px;
+
+            border-radius: 50%;
+            background: var(--cyan);
+            box-shadow: 0 0 14px var(--cyan);
+
+            animation: indicator-pulse 1.8s ease-in-out infinite;
+        }
+
+        .hero h1 {
+            margin: 0;
+
+            font-family: "Orbitron", sans-serif;
+            font-size: clamp(3.2rem, 9vw, 7.5rem);
+            font-weight: 700;
+            line-height: 0.98;
+            letter-spacing: -0.055em;
+
+            text-shadow: 0 0 35px rgba(87, 140, 255, 0.12);
+        }
+
+        .hero h1 span {
+            color: transparent;
+            background:
+                linear-gradient(
+                    100deg,
+                    var(--cyan),
+                    #86baff 45%,
+                    var(--violet) 100%
+                );
+
+            -webkit-background-clip: text;
+            background-clip: text;
+
+            filter: drop-shadow(
+                0 0 22px rgba(99, 242, 255, 0.18)
+            );
+        }
+
+        /* Email, GitHub, and Google Scholar directly below name */
+        .social-links {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 11px;
+
+            margin-top: 28px;
+        }
+
+        .social-link {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 9px;
+
+            min-height: 42px;
+            padding: 9px 15px;
+
+            color: var(--text-secondary);
+            border: 1px solid var(--border);
+            border-radius: 9px;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    rgba(99, 242, 255, 0.055),
+                    rgba(155, 124, 255, 0.035)
+                );
+
+            font-size: 0.82rem;
+            font-weight: 500;
+            letter-spacing: 0.015em;
+            text-decoration: none;
+
+            -webkit-backdrop-filter: blur(12px);
+            backdrop-filter: blur(12px);
+
+            transition:
+                color 180ms ease,
+                border-color 180ms ease,
+                background 180ms ease,
+                transform 180ms ease,
+                box-shadow 180ms ease;
+        }
+
+        .social-link svg {
+            flex: 0 0 auto;
+            width: 17px;
+            height: 17px;
+        }
+
+        .social-link:hover {
+            color: var(--cyan);
+            border-color: var(--border-bright);
+
+            background:
+                linear-gradient(
+                    135deg,
+                    rgba(99, 242, 255, 0.1),
+                    rgba(155, 124, 255, 0.07)
+                );
+
+            transform: translateY(-3px);
+
+            box-shadow:
+                0 10px 30px rgba(0, 0, 0, 0.22),
+                0 0 22px rgba(99, 242, 255, 0.08);
+        }
+
+        .hero-role {
+            margin: 29px 0 0;
+
+            color: var(--text);
+            font-family: "Orbitron", sans-serif;
+            font-size: clamp(0.79rem, 2vw, 1.04rem);
+            font-weight: 500;
+            letter-spacing: 0.13em;
+            text-transform: uppercase;
+        }
+
+        .hero-role .divider {
+            margin: 0 10px;
+            color: var(--cyan);
+        }
+
+        .hero-description {
+            max-width: 720px;
+            margin: 22px auto 0;
+
+            color: var(--text-secondary);
+            font-size: clamp(1rem, 2vw, 1.15rem);
+            font-weight: 300;
+            line-height: 1.85;
+        }
+
+        .hero-description strong {
+            color: var(--text);
+            font-weight: 500;
+        }
+
+        .hero-actions {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 13px;
+
+            margin-top: 34px;
         }
 
         .button {
-            display: inline-block;
-            margin-top: 10px;
-            padding: 10px 18px;
-            background: #2563eb;
-            color: white;
+            position: relative;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 9px;
+
+            min-height: 48px;
+            padding: 11px 20px;
+
+            overflow: hidden;
+            border: 1px solid transparent;
+            border-radius: 9px;
+
+            font-size: 0.86rem;
+            font-weight: 600;
+            letter-spacing: 0.035em;
             text-decoration: none;
-            border-radius: 6px;
+
+            transition:
+                transform 180ms ease,
+                box-shadow 180ms ease,
+                border-color 180ms ease;
         }
 
-        .button:hover {
-            background: #1d4ed8;
+        .button-primary {
+            color: #041016;
+            background:
+                linear-gradient(
+                    105deg,
+                    var(--cyan),
+                    #89baff
+                );
+
+            box-shadow: 0 0 30px rgba(99, 242, 255, 0.17);
         }
+
+        .button-primary:hover {
+            transform: translateY(-3px);
+            box-shadow:
+                0 13px 35px rgba(0, 0, 0, 0.3),
+                0 0 34px rgba(99, 242, 255, 0.24);
+        }
+
+        .button-secondary {
+            color: var(--text);
+            border-color: var(--border);
+            background: rgba(10, 17, 35, 0.58);
+        }
+
+        .button-secondary:hover {
+            border-color: var(--border-bright);
+            transform: translateY(-3px);
+        }
+
+        .button svg {
+            width: 16px;
+            height: 16px;
+        }
+
+        .hero-domains {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+
+            width: min(760px, 100%);
+            margin: 56px auto 0;
+
+            border: 1px solid var(--border);
+            border-radius: 13px;
+
+            background: rgba(8, 14, 30, 0.5);
+
+            -webkit-backdrop-filter: blur(15px);
+            backdrop-filter: blur(15px);
+        }
+
+        .domain-item {
+            position: relative;
+            padding: 18px 20px;
+        }
+
+        .domain-item:not(:last-child)::after {
+            content: "";
+            position: absolute;
+            top: 20%;
+            right: 0;
+
+            width: 1px;
+            height: 60%;
+
+            background:
+                linear-gradient(
+                    transparent,
+                    var(--border-bright),
+                    transparent
+                );
+        }
+
+        .domain-label {
+            display: block;
+
+            margin-bottom: 5px;
+
+            color: var(--cyan);
+            font-family: "Orbitron", sans-serif;
+            font-size: 0.58rem;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+        }
+
+        .domain-value {
+            color: var(--text-secondary);
+            font-size: 0.85rem;
+        }
+
+        /* =========================
+           Main sections
+        ========================== */
+
+        main {
+            position: relative;
+            z-index: 1;
+        }
+
+        .page-section {
+            width: min(1160px, calc(100% - 40px));
+            margin: 0 auto;
+            padding: 95px 0;
+        }
+
+        .section-heading {
+            display: flex;
+            align-items: flex-end;
+            justify-content: space-between;
+            gap: 30px;
+
+            margin-bottom: 34px;
+        }
+
+        .section-code {
+            display: block;
+
+            margin-bottom: 10px;
+
+            color: var(--cyan);
+            font-family: "Orbitron", sans-serif;
+            font-size: 0.67rem;
+            font-weight: 600;
+            letter-spacing: 0.17em;
+            text-transform: uppercase;
+        }
+
+        .section-heading h2 {
+            margin: 0;
+
+            font-family: "Orbitron", sans-serif;
+            font-size: clamp(2rem, 5vw, 3.5rem);
+            line-height: 1.12;
+            letter-spacing: -0.035em;
+        }
+
+        .section-heading h2 span {
+            color: var(--cyan);
+        }
+
+        .section-heading > p {
+            max-width: 420px;
+            margin: 0;
+
+            color: var(--text-muted);
+            font-size: 0.92rem;
+            text-align: right;
+        }
+
+        .glass-panel {
+            position: relative;
+            overflow: hidden;
+
+            border: 1px solid var(--border);
+            border-radius: 18px;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    rgba(15, 26, 53, 0.78),
+                    rgba(7, 13, 28, 0.68)
+                );
+
+            box-shadow: var(--shadow);
+
+            -webkit-backdrop-filter: blur(18px);
+            backdrop-filter: blur(18px);
+        }
+
+        .glass-panel::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 10%;
+
+            width: 80%;
+            height: 1px;
+
+            background:
+                linear-gradient(
+                    90deg,
+                    transparent,
+                    rgba(99, 242, 255, 0.8),
+                    transparent
+                );
+        }
+
+        /* =========================
+           About
+        ========================== */
+
+        .about-grid {
+            display: grid;
+            grid-template-columns: minmax(0, 1.2fr) minmax(320px, 0.8fr);
+            align-items: center;
+            gap: 50px;
+
+            min-height: 500px;
+            padding: clamp(30px, 5vw, 60px);
+        }
+
+        .about-copy p {
+            margin: 0 0 20px;
+            color: var(--text-secondary);
+            font-size: 1rem;
+        }
+
+        .about-copy p:first-of-type {
+            color: var(--text);
+            font-size: 1.13rem;
+        }
+
+        .about-copy strong {
+            color: var(--cyan);
+            font-weight: 600;
+        }
+
+        .fact-grid {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 10px;
+
+            margin-top: 31px;
+        }
+
+        .fact {
+            min-height: 108px;
+            padding: 15px;
+
+            border: 1px solid rgba(99, 242, 255, 0.11);
+            border-radius: 11px;
+
+            background: rgba(99, 242, 255, 0.025);
+        }
+
+        .fact-number {
+            display: block;
+
+            margin-bottom: 8px;
+
+            color: var(--cyan);
+            font-family: "Orbitron", sans-serif;
+            font-size: 0.6rem;
+            letter-spacing: 0.13em;
+        }
+
+        .fact strong {
+            display: block;
+            margin-bottom: 4px;
+
+            color: var(--text);
+            font-size: 0.88rem;
+        }
+
+        .fact span:last-child {
+            color: var(--text-muted);
+            font-size: 0.73rem;
+            line-height: 1.45;
+        }
+
+        /* Research system visualization */
+        .systems-map {
+            position: relative;
+
+            width: min(370px, 100%);
+            aspect-ratio: 1;
+            margin: 0 auto;
+        }
+
+        .orbit-ring {
+            position: absolute;
+            inset: 14%;
+
+            border: 1px solid rgba(99, 242, 255, 0.16);
+            border-radius: 50%;
+        }
+
+        .orbit-ring::before,
+        .orbit-ring::after {
+            content: "";
+            position: absolute;
+
+            width: 6px;
+            height: 6px;
+
+            border-radius: 50%;
+            background: var(--cyan);
+            box-shadow: 0 0 14px var(--cyan);
+        }
+
+        .orbit-ring::before {
+            top: 13%;
+            left: 9%;
+        }
+
+        .orbit-ring::after {
+            right: 4%;
+            bottom: 22%;
+        }
+
+        .orbit-ring-one {
+            animation: orbit-spin 18s linear infinite;
+        }
+
+        .orbit-ring-two {
+            inset: 28%;
+
+            border-color: rgba(155, 124, 255, 0.2);
+            border-style: dashed;
+
+            animation: orbit-spin-reverse 14s linear infinite;
+        }
+
+        .map-core {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+
+            display: grid;
+            place-items: center;
+
+            width: 126px;
+            height: 126px;
+
+            border: 1px solid var(--border-bright);
+            border-radius: 50%;
+
+            background:
+                radial-gradient(
+                    circle,
+                    rgba(99, 242, 255, 0.17),
+                    rgba(8, 16, 34, 0.9) 62%
+                );
+
+            box-shadow:
+                inset 0 0 38px rgba(99, 242, 255, 0.08),
+                0 0 40px rgba(99, 242, 255, 0.12);
+
+            transform: translate(-50%, -50%);
+            animation: core-pulse 3.5s ease-in-out infinite;
+        }
+
+        .map-core-inner {
+            text-align: center;
+        }
+
+        .map-core span {
+            display: block;
+
+            color: var(--text-muted);
+            font-family: "Orbitron", sans-serif;
+            font-size: 0.52rem;
+            letter-spacing: 0.15em;
+        }
+
+        .map-core strong {
+            display: block;
+
+            margin-top: 4px;
+
+            color: var(--cyan);
+            font-family: "Orbitron", sans-serif;
+            font-size: 0.82rem;
+            letter-spacing: 0.08em;
+        }
+
+        .system-node {
+            position: absolute;
+            z-index: 3;
+
+            padding: 7px 10px;
+
+            color: var(--text-secondary);
+            border: 1px solid var(--border);
+            border-radius: 7px;
+
+            background: rgba(8, 15, 31, 0.9);
+
+            font-family: "Orbitron", sans-serif;
+            font-size: 0.54rem;
+            letter-spacing: 0.06em;
+            text-transform: uppercase;
+
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25);
+        }
+
+        .node-one {
+            top: 4%;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        .node-two {
+            top: 43%;
+            right: -2%;
+        }
+
+        .node-three {
+            bottom: 5%;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        .node-four {
+            top: 43%;
+            left: -3%;
+        }
+
+        /* =========================
+           Research
+        ========================== */
+
+        .research-grid {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 16px;
+        }
+
+        .research-card {
+            position: relative;
+            min-height: 260px;
+            padding: 30px;
+
+            overflow: hidden;
+
+            border: 1px solid var(--border);
+            border-radius: 16px;
+
+            background:
+                linear-gradient(
+                    145deg,
+                    rgba(15, 27, 55, 0.72),
+                    rgba(7, 13, 29, 0.76)
+                );
+
+            transition:
+                transform 220ms ease,
+                border-color 220ms ease,
+                box-shadow 220ms ease;
+        }
+
+        .research-card::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            right: 0;
+
+            width: 110px;
+            height: 110px;
+
+            background:
+                radial-gradient(
+                    circle at top right,
+                    rgba(99, 242, 255, 0.11),
+                    transparent 70%
+                );
+        }
+
+        .research-card:hover {
+            border-color: var(--border-bright);
+            transform: translateY(-7px);
+
+            box-shadow:
+                0 24px 55px rgba(0, 0, 0, 0.29),
+                0 0 26px rgba(99, 242, 255, 0.055);
+        }
+
+        .card-index {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+
+            width: 42px;
+            height: 42px;
+
+            margin-bottom: 32px;
+
+            color: var(--cyan);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+
+            background: rgba(99, 242, 255, 0.045);
+
+            font-family: "Orbitron", sans-serif;
+            font-size: 0.68rem;
+        }
+
+        .research-card h3 {
+            margin: 0 0 13px;
+
+            font-family: "Orbitron", sans-serif;
+            font-size: 1.03rem;
+            letter-spacing: 0.02em;
+        }
+
+        .research-card p {
+            margin: 0;
+            color: var(--text-secondary);
+            font-size: 0.91rem;
+        }
+
+        .card-line {
+            position: absolute;
+            right: 30px;
+            bottom: 27px;
+            left: 30px;
+
+            height: 1px;
+
+            background:
+                linear-gradient(
+                    90deg,
+                    var(--cyan),
+                    transparent 65%
+                );
+
+            opacity: 0.25;
+        }
+
+        /* =========================
+           Projects
+        ========================== */
+
+        .project-grid {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 16px;
+        }
+
+        .project-card {
+            position: relative;
+            display: flex;
+            flex-direction: column;
+
+            min-height: 405px;
+            padding: 28px;
+
+            overflow: hidden;
+
+            border: 1px solid var(--border);
+            border-radius: 16px;
+
+            background:
+                linear-gradient(
+                    160deg,
+                    rgba(16, 29, 58, 0.76),
+                    rgba(6, 12, 26, 0.82)
+                );
+
+            transition:
+                transform 220ms ease,
+                border-color 220ms ease,
+                box-shadow 220ms ease;
+        }
+
+        .project-card::after {
+            content: "";
+            position: absolute;
+            top: -70px;
+            right: -70px;
+
+            width: 160px;
+            height: 160px;
+
+            border: 1px solid rgba(99, 242, 255, 0.11);
+            border-radius: 50%;
+
+            box-shadow:
+                0 0 0 25px rgba(99, 242, 255, 0.015),
+                0 0 0 50px rgba(99, 242, 255, 0.01);
+        }
+
+        .project-card:hover {
+            border-color: var(--border-bright);
+            transform: translateY(-7px);
+
+            box-shadow:
+                0 24px 60px rgba(0, 0, 0, 0.32),
+                0 0 25px rgba(99, 242, 255, 0.05);
+        }
+
+        .project-meta {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+
+            margin-bottom: 55px;
+        }
+
+        .project-number {
+            color: var(--cyan);
+            font-family: "Orbitron", sans-serif;
+            font-size: 0.65rem;
+            letter-spacing: 0.12em;
+        }
+
+        .project-status {
+            display: inline-flex;
+            align-items: center;
+            gap: 7px;
+
+            color: var(--text-muted);
+            font-size: 0.68rem;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+        }
+
+        .project-status::before {
+            content: "";
+
+            width: 6px;
+            height: 6px;
+
+            border-radius: 50%;
+            background: var(--cyan);
+            box-shadow: 0 0 10px var(--cyan);
+        }
+
+        .project-card h3 {
+            position: relative;
+            z-index: 1;
+
+            margin: 0 0 15px;
+
+            font-family: "Orbitron", sans-serif;
+            font-size: 1.12rem;
+            line-height: 1.5;
+        }
+
+        .project-card p {
+            position: relative;
+            z-index: 1;
+
+            margin: 0 0 24px;
+
+            color: var(--text-secondary);
+            font-size: 0.88rem;
+        }
+
+        .project-tags {
+            position: relative;
+            z-index: 1;
+
+            display: flex;
+            flex-wrap: wrap;
+            gap: 7px;
+
+            margin-bottom: 27px;
+        }
+
+        .tag {
+            padding: 5px 9px;
+
+            color: #9cc7d6;
+            border: 1px solid rgba(99, 242, 255, 0.11);
+            border-radius: 5px;
+
+            background: rgba(99, 242, 255, 0.035);
+
+            font-size: 0.66rem;
+            letter-spacing: 0.04em;
+        }
+
+        .project-link {
+            position: relative;
+            z-index: 1;
+
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+
+            width: fit-content;
+            margin-top: auto;
+
+            color: var(--cyan);
+
+            font-size: 0.78rem;
+            font-weight: 600;
+            letter-spacing: 0.05em;
+            text-decoration: none;
+            text-transform: uppercase;
+        }
+
+        .project-link span {
+            transition: transform 180ms ease;
+        }
+
+        .project-link:hover span {
+            transform: translate(3px, -3px);
+        }
+
+        /* =========================
+           Footer
+        ========================== */
 
         footer {
-            text-align: center;
-            padding: 30px;
-            color: #6b7280;
+            width: min(1160px, calc(100% - 40px));
+            margin: 35px auto 0;
+            padding: 35px 0 45px;
+
+            color: var(--text-muted);
+            border-top: 1px solid var(--border);
+
+            font-size: 0.78rem;
         }
 
-        @media (max-width: 600px) {
-            header h1 {
-                font-size: 2rem;
+        .footer-inner {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 20px;
+        }
+
+        .footer-status {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .footer-status::before {
+            content: "";
+
+            width: 6px;
+            height: 6px;
+
+            border-radius: 50%;
+            background: var(--cyan);
+            box-shadow: 0 0 10px var(--cyan);
+        }
+
+        /* =========================
+           Animations
+        ========================== */
+
+        @keyframes indicator-pulse {
+            0%,
+            100% {
+                opacity: 1;
+                transform: scale(1);
             }
 
-            nav a {
-                display: inline-block;
-                margin: 5px 8px;
+            50% {
+                opacity: 0.4;
+                transform: scale(0.72);
+            }
+        }
+
+        @keyframes core-pulse {
+            0%,
+            100% {
+                box-shadow:
+                    inset 0 0 38px rgba(99, 242, 255, 0.08),
+                    0 0 40px rgba(99, 242, 255, 0.12);
             }
 
-            section {
-                padding: 22px;
+            50% {
+                box-shadow:
+                    inset 0 0 50px rgba(99, 242, 255, 0.13),
+                    0 0 58px rgba(99, 242, 255, 0.19);
+            }
+        }
+
+        @keyframes orbit-spin {
+            from {
+                transform: rotate(0deg);
+            }
+
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        @keyframes orbit-spin-reverse {
+            from {
+                transform: rotate(360deg);
+            }
+
+            to {
+                transform: rotate(0deg);
+            }
+        }
+
+        @keyframes aurora-drift-one {
+            from {
+                transform: translate(0, 0);
+            }
+
+            to {
+                transform: translate(70px, 50px);
+            }
+        }
+
+        @keyframes aurora-drift-two {
+            from {
+                transform: translate(0, 0);
+            }
+
+            to {
+                transform: translate(-60px, 70px);
+            }
+        }
+
+        @keyframes aurora-drift-three {
+            from {
+                transform: translate(0, 0);
+            }
+
+            to {
+                transform: translate(50px, -45px);
+            }
+        }
+
+        /* =========================
+           Responsive design
+        ========================== */
+
+        @media (max-width: 900px) {
+            .logo-subtitle {
+                display: none;
+            }
+
+            .about-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .about-copy {
+                order: 1;
+            }
+
+            .systems-map {
+                order: 2;
+                margin-top: 15px;
+            }
+
+            .project-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .project-card {
+                min-height: 340px;
+            }
+        }
+
+        @media (max-width: 720px) {
+            .nav-inner {
+                width: min(100% - 28px, 1180px);
+            }
+
+            .nav-links {
+                gap: 14px;
+            }
+
+            .nav-links a {
+                font-size: 0.67rem;
+                letter-spacing: 0.04em;
+            }
+
+            .hero {
+                padding-right: 18px;
+                padding-left: 18px;
+            }
+
+            .hero-role {
+                line-height: 2;
+            }
+
+            .hero-role .divider {
+                margin: 0 5px;
+            }
+
+            .hero-domains {
+                grid-template-columns: 1fr;
+            }
+
+            .domain-item:not(:last-child)::after {
+                top: auto;
+                right: 12%;
+                bottom: 0;
+                left: 12%;
+
+                width: 76%;
+                height: 1px;
+
+                background:
+                    linear-gradient(
+                        90deg,
+                        transparent,
+                        var(--border-bright),
+                        transparent
+                    );
+            }
+
+            .page-section {
+                width: min(100% - 28px, 1160px);
+                padding: 72px 0;
+            }
+
+            .section-heading {
+                display: block;
+            }
+
+            .section-heading > p {
+                margin-top: 17px;
+                text-align: left;
+            }
+
+            .research-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .about-grid {
+                padding: 28px 22px 36px;
+            }
+
+            .fact-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .fact {
+                min-height: auto;
+            }
+
+            footer {
+                width: min(100% - 28px, 1160px);
+            }
+
+            .footer-inner {
+                align-items: flex-start;
+                flex-direction: column;
+            }
+        }
+
+        @media (max-width: 510px) {
+            .site-nav {
+                position: absolute;
+            }
+
+            .nav-inner {
+                justify-content: center;
+            }
+
+            .logo {
+                display: none;
+            }
+
+            .nav-links {
+                width: 100%;
+                justify-content: space-between;
+            }
+
+            .social-links {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .social-link {
+                width: 100%;
+            }
+
+            .social-link span {
+                overflow-wrap: anywhere;
+            }
+
+            .hero-actions {
+                align-items: stretch;
+                flex-direction: column;
+            }
+
+            .button {
+                width: 100%;
+            }
+
+            .systems-map {
+                width: 275px;
+            }
+
+            .system-node {
+                font-size: 0.46rem;
+            }
+
+            .node-two {
+                right: -5%;
+            }
+
+            .node-four {
+                left: -6%;
+            }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            html {
+                scroll-behavior: auto;
+            }
+
+            *,
+            *::before,
+            *::after {
+                animation-duration: 0.001ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.001ms !important;
             }
         }
     </style>
@@ -127,99 +1562,535 @@
 
 <body>
 
-<header>
-    <h1>你的名字</h1>
-    <p>Ph.D. Student | Researcher | Developer</p>
-</header>
+    <!-- Decorative background elements -->
+    <div class="aurora aurora-one" aria-hidden="true"></div>
+    <div class="aurora aurora-two" aria-hidden="true"></div>
+    <div class="aurora aurora-three" aria-hidden="true"></div>
 
-<nav>
-    <a href="#about">About</a>
-    <a href="#research">Research</a>
-    <a href="#projects">Projects</a>
-    <a href="#contact">Contact</a>
-</nav>
+    <!-- Navigation -->
+    <nav class="site-nav">
+        <div class="nav-inner">
 
-<main>
+            <a class="logo" href="#home" aria-label="Return to home">
+                <span class="logo-symbol">WB</span>
 
-    <section id="about">
-        <h2>About Me</h2>
+                <span>
+                    Wencheng Bao
+                    <span class="logo-subtitle">Research Portfolio</span>
+                </span>
+            </a>
 
-        <p>
-            Welcome to my personal website. I am a Ph.D. student interested in
-            transportation systems, electric vehicles, optimization, and data analysis.
-        </p>
+            <div class="nav-links">
+                <a href="#home">Home</a>
+                <a href="#about">About</a>
+                <a href="#research">Research</a>
+                <a href="#projects">Projects</a>
+            </div>
 
-        <p>
-            You can use this section to introduce your education, research interests,
-            professional experience, and current position.
-        </p>
-
-        <a class="button" href="cv.pdf">View My CV</a>
-    </section>
-
-    <section id="research">
-        <h2>Research</h2>
-
-        <p>My research interests include:</p>
-
-        <ul>
-            <li>Transportation network modeling</li>
-            <li>Electric vehicle charging systems</li>
-            <li>Optimization under uncertainty</li>
-            <li>Infrastructure resilience</li>
-        </ul>
-    </section>
-
-    <section id="projects">
-        <h2>Selected Projects</h2>
-
-        <div class="project">
-            <h3>Project One</h3>
-            <p>
-                Briefly describe the research problem, methodology, and key findings.
-            </p>
-            <a href="#">Project page</a>
         </div>
+    </nav>
 
-        <div class="project">
-            <h3>Project Two</h3>
-            <p>
-                Briefly describe your software, paper, dataset, or research project.
+    <!-- Hero -->
+    <header class="hero" id="home">
+        <div class="hero-content">
+
+            <p class="eyebrow">
+                <span class="eyebrow-indicator"></span>
+                Academic Research Portfolio
             </p>
-            <a href="#">GitHub repository</a>
+
+            <h1>
+                Wencheng <span>Bao</span>
+            </h1>
+
+            <!-- Email, GitHub, and Google Scholar under the name -->
+            <div class="social-links" aria-label="Academic and professional profiles">
+
+                <a
+                    class="social-link"
+                    href="mailto:wbao5@illinois.edu"
+                    aria-label="Email Wencheng Bao"
+                >
+                    <svg
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="1.8"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        aria-hidden="true"
+                    >
+                        <rect x="3" y="5" width="18" height="14" rx="2"></rect>
+                        <path d="m3 7 9 6 9-6"></path>
+                    </svg>
+
+                    <span>wbao5@illinois.edu</span>
+                </a>
+
+                <!-- Replace YOUR_GITHUB_USERNAME with your actual username -->
+                <a
+                    class="social-link"
+                    href="https://github.com/YOUR_GITHUB_USERNAME"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label="Visit Wencheng Bao's GitHub profile"
+                >
+                    <svg
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="1.8"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        aria-hidden="true"
+                    >
+                        <path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3.3-.4 6.8-1.6 6.8-7A5.4 5.4 0 0 0 19.4 4a5 5 0 0 0-.1-3.5S18.2.1 15 1.8a13.4 13.4 0 0 0-6 0C5.8.1 4.7.5 4.7.5A5 5 0 0 0 4.6 4a5.4 5.4 0 0 0-1.4 3.7c0 5.4 3.5 6.6 6.8 7A4.8 4.8 0 0 0 9 18v4"></path>
+                        <path d="M9 18c-4.5 2-5-2-7-2"></path>
+                    </svg>
+
+                    <span>GitHub</span>
+                </a>
+
+                <a
+                    class="social-link"
+                    href="https://scholar.google.com/citations?user=iFqunTgAAAAJ&amp;hl=en"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label="Visit Wencheng Bao's Google Scholar profile"
+                >
+                    <svg
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="1.8"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        aria-hidden="true"
+                    >
+                        <path d="m2 9 10-5 10 5-10 5L2 9Z"></path>
+                        <path d="M6 11.5V16c3 2.2 9 2.2 12 0v-4.5"></path>
+                        <path d="M22 9v6"></path>
+                    </svg>
+
+                    <span>Google Scholar</span>
+                </a>
+
+            </div>
+
+            <p class="hero-role">
+                Ph.D. Student
+                <span class="divider">/</span>
+                Researcher
+                <span class="divider">/</span>
+                Developer
+            </p>
+
+            <p class="hero-description">
+                Developing data-driven and optimization-based methods for
+                <strong>transportation systems</strong>,
+                <strong>electric mobility</strong>, and
+                <strong>resilient infrastructure</strong>.
+            </p>
+
+            <div class="hero-actions">
+
+                <a class="button button-primary" href="#research">
+                    Explore My Research
+
+                    <svg
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="2"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        aria-hidden="true"
+                    >
+                        <path d="M5 12h14"></path>
+                        <path d="m13 6 6 6-6 6"></path>
+                    </svg>
+                </a>
+
+                <a
+                    class="button button-secondary"
+                    href="cv.pdf"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                >
+                    View My CV
+
+                    <svg
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="2"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        aria-hidden="true"
+                    >
+                        <path d="M12 3v12"></path>
+                        <path d="m7 10 5 5 5-5"></path>
+                        <path d="M5 21h14"></path>
+                    </svg>
+                </a>
+
+            </div>
+
+            <div class="hero-domains">
+                <div class="domain-item">
+                    <span class="domain-label">Domain 01</span>
+                    <span class="domain-value">Transportation Systems</span>
+                </div>
+
+                <div class="domain-item">
+                    <span class="domain-label">Domain 02</span>
+                    <span class="domain-value">Electric Mobility</span>
+                </div>
+
+                <div class="domain-item">
+                    <span class="domain-label">Domain 03</span>
+                    <span class="domain-value">Optimization</span>
+                </div>
+            </div>
+
         </div>
-    </section>
+    </header>
 
-    <section id="contact">
-        <h2>Contact</h2>
+    <main>
 
-        <p>
-            Email:
-            <a href="mailto:your-email@example.com">
-                your-email@example.com
-            </a>
-        </p>
+        <!-- About -->
+        <section class="page-section" id="about">
 
-        <p>
-            GitHub:
-            <a href="https://github.com/your-username">
-                github.com/your-username
-            </a>
-        </p>
+            <div class="section-heading">
+                <div>
+                    <span class="section-code">01 / About</span>
+                    <h2>Researching the future of <span>mobility.</span></h2>
+                </div>
 
-        <p>
-            Google Scholar:
-            <a href="#">
-                My Google Scholar Profile
-            </a>
-        </p>
-    </section>
+                <p>
+                    My work connects transportation engineering, operations
+                    research, energy systems, and data analytics.
+                </p>
+            </div>
 
-</main>
+            <div class="glass-panel about-grid">
 
-<footer>
-    <p>© 2026 Your Name. Hosted with GitHub Pages.</p>
-</footer>
+                <div class="about-copy">
+                    <p>
+                        I am a Ph.D. student in Civil and Environmental
+                        Engineering at the University of Illinois
+                        Urbana-Champaign.
+                    </p>
+
+                    <p>
+                        My research focuses on the design and operation of
+                        <strong>transportation and energy systems</strong>
+                        under uncertainty. I develop mathematical models,
+                        computational algorithms, and data-driven methods for
+                        electric vehicle charging, traveler behavior, network
+                        resilience, and infrastructure planning.
+                    </p>
+
+                    <p>
+                        My broader objective is to understand how emerging
+                        mobility technologies can support transportation
+                        systems that are more efficient, reliable, equitable,
+                        and resilient.
+                    </p>
+
+                    <div class="fact-grid">
+
+                        <div class="fact">
+                            <span class="fact-number">LOCATION</span>
+                            <strong>UIUC</strong>
+                            <span>
+                                Civil and Environmental Engineering
+                            </span>
+                        </div>
+
+                        <div class="fact">
+                            <span class="fact-number">METHODS</span>
+                            <strong>OR + Data</strong>
+                            <span>
+                                Optimization, simulation, and analytics
+                            </span>
+                        </div>
+
+                        <div class="fact">
+                            <span class="fact-number">APPLICATION</span>
+                            <strong>Mobility</strong>
+                            <span>
+                                Transportation and charging systems
+                            </span>
+                        </div>
+
+                    </div>
+                </div>
+
+                <div
+                    class="systems-map"
+                    aria-label="Visualization of Wencheng Bao's research areas"
+                >
+                    <div class="orbit-ring orbit-ring-one"></div>
+                    <div class="orbit-ring orbit-ring-two"></div>
+
+                    <div class="map-core">
+                        <div class="map-core-inner">
+                            <span>Integrated</span>
+                            <strong>Research</strong>
+                        </div>
+                    </div>
+
+                    <div class="system-node node-one">
+                        Networks
+                    </div>
+
+                    <div class="system-node node-two">
+                        Energy
+                    </div>
+
+                    <div class="system-node node-three">
+                        Resilience
+                    </div>
+
+                    <div class="system-node node-four">
+                        Optimization
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- Research -->
+        <section class="page-section" id="research">
+
+            <div class="section-heading">
+                <div>
+                    <span class="section-code">02 / Research</span>
+                    <h2>Core research <span>directions.</span></h2>
+                </div>
+
+                <p>
+                    Interdisciplinary research at the intersection of
+                    mobility, energy, uncertainty, and infrastructure.
+                </p>
+            </div>
+
+            <div class="research-grid">
+
+                <article class="research-card">
+                    <span class="card-index">01</span>
+
+                    <h3>Transportation Network Modeling</h3>
+
+                    <p>
+                        Modeling traveler behavior, congestion, route choice,
+                        and network performance under uncertain and disrupted
+                        transportation conditions.
+                    </p>
+
+                    <div class="card-line"></div>
+                </article>
+
+                <article class="research-card">
+                    <span class="card-index">02</span>
+
+                    <h3>Electric Vehicle Charging</h3>
+
+                    <p>
+                        Studying charging behavior, charging infrastructure,
+                        fleet electrification, and interactions between
+                        transportation and electric power systems.
+                    </p>
+
+                    <div class="card-line"></div>
+                </article>
+
+                <article class="research-card">
+                    <span class="card-index">03</span>
+
+                    <h3>Optimization Under Uncertainty</h3>
+
+                    <p>
+                        Developing stochastic, robust, distributionally
+                        robust, and risk-aware optimization approaches for
+                        complex infrastructure systems.
+                    </p>
+
+                    <div class="card-line"></div>
+                </article>
+
+                <article class="research-card">
+                    <span class="card-index">04</span>
+
+                    <h3>Infrastructure Resilience</h3>
+
+                    <p>
+                        Evaluating how transportation and charging systems
+                        respond to extreme weather, disruptions, uncertain
+                        demand, and infrastructure failures.
+                    </p>
+
+                    <div class="card-line"></div>
+                </article>
+
+            </div>
+        </section>
+
+        <!-- Projects -->
+        <section class="page-section" id="projects">
+
+            <div class="section-heading">
+                <div>
+                    <span class="section-code">03 / Projects</span>
+                    <h2>Selected <span>research projects.</span></h2>
+                </div>
+
+                <p>
+                    Representative projects in transportation optimization,
+                    electric mobility, and resilient infrastructure systems.
+                </p>
+            </div>
+
+            <div class="project-grid">
+
+                <article class="project-card">
+
+                    <div class="project-meta">
+                        <span class="project-number">PROJECT / 01</span>
+                        <span class="project-status">Research</span>
+                    </div>
+
+                    <h3>
+                        Risk-Aware Transportation Network Models
+                    </h3>
+
+                    <p>
+                        Developing stochastic equilibrium and risk-aware
+                        optimization models for transportation networks with
+                        uncertain and heavy-tailed travel times.
+                    </p>
+
+                    <div class="project-tags">
+                        <span class="tag">Route Choice</span>
+                        <span class="tag">CVaR</span>
+                        <span class="tag">DRO</span>
+                    </div>
+
+                    <!-- Replace # with the project or paper URL -->
+                    <a class="project-link" href="#">
+                        Project details
+                        <span>↗</span>
+                    </a>
+
+                </article>
+
+                <article class="project-card">
+
+                    <div class="project-meta">
+                        <span class="project-number">PROJECT / 02</span>
+                        <span class="project-status">Data Study</span>
+                    </div>
+
+                    <h3>
+                        EV Charging Behavior During Extreme Events
+                    </h3>
+
+                    <p>
+                        Analyzing residential electric vehicle charging
+                        behavior before, during, and after weather hazards and
+                        power-system disruptions.
+                    </p>
+
+                    <div class="project-tags">
+                        <span class="tag">EV Charging</span>
+                        <span class="tag">Hazards</span>
+                        <span class="tag">Data Analytics</span>
+                    </div>
+
+                    <!-- Replace # with the project or paper URL -->
+                    <a class="project-link" href="#">
+                        Project details
+                        <span>↗</span>
+                    </a>
+
+                </article>
+
+                <article class="project-card">
+
+                    <div class="project-meta">
+                        <span class="project-number">PROJECT / 03</span>
+                        <span class="project-status">Optimization</span>
+                    </div>
+
+                    <h3>
+                        Electric Fleet and Charging Infrastructure
+                    </h3>
+
+                    <p>
+                        Designing optimization and game-theoretic models for
+                        fleet charging, infrastructure investment, pricing,
+                        and decentralized decision-making.
+                    </p>
+
+                    <div class="project-tags">
+                        <span class="tag">Electric Fleets</span>
+                        <span class="tag">Game Theory</span>
+                        <span class="tag">Algorithms</span>
+                    </div>
+
+                    <!-- Replace # with the project or paper URL -->
+                    <a class="project-link" href="#">
+                        Project details
+                        <span>↗</span>
+                    </a>
+
+                </article>
+
+            </div>
+        </section>
+
+    </main>
+
+    <footer>
+        <div class="footer-inner">
+
+            <span>
+                © <span id="current-year">2026</span> Wencheng Bao.
+                Hosted with GitHub Pages.
+            </span>
+
+            <span class="footer-status">
+                Research portfolio online
+            </span>
+
+        </div>
+    </footer>
+
+    <script>
+        /*
+         * Update the footer year automatically.
+         */
+        document.getElementById("current-year").textContent =
+            new Date().getFullYear();
+
+        /*
+         * Create a subtle mouse-following glow on desktop devices.
+         */
+        if (window.matchMedia("(pointer: fine)").matches) {
+            document.addEventListener("pointermove", function (event) {
+                document.documentElement.style.setProperty(
+                    "--mouse-x",
+                    event.clientX + "px"
+                );
+
+                document.documentElement.style.setProperty(
+                    "--mouse-y",
+                    event.clientY + "px"
+                );
+            });
+        }
+    </script>
 
 </body>
 </html>
