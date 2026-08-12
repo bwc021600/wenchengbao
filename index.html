@@ -129,6 +129,35 @@
             border-bottom: 1px solid var(--border);
         }
 
+        .header-layout {
+            display: grid;
+            grid-template-columns: minmax(0, 1fr) 180px;
+            align-items: start;
+            gap: 52px;
+        }
+
+        .header-content {
+            min-width: 0;
+        }
+
+        .photo-container {
+            display: flex;
+            justify-content: flex-end;
+            padding-top: 7px;
+        }
+
+        .profile-photo {
+            display: block;
+            width: 180px;
+            height: 225px;
+            object-fit: cover;
+            object-position: center;
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            background: var(--surface);
+            box-shadow: 0 10px 28px rgba(31, 41, 51, 0.12);
+        }
+
         header h1 {
             margin: 0;
             font-size: clamp(2.5rem, 7vw, 4.4rem);
@@ -465,6 +494,22 @@
                 padding: 70px 0 55px;
             }
 
+            .header-layout {
+                grid-template-columns: 1fr;
+                gap: 28px;
+            }
+
+            .photo-container {
+                order: -1;
+                justify-content: flex-start;
+                padding-top: 0;
+            }
+
+            .profile-photo {
+                width: 140px;
+                height: 175px;
+            }
+
             .profile-links {
                 align-items: flex-start;
                 flex-direction: column;
@@ -528,62 +573,81 @@
 
     <header id="home">
 
-        <h1>Wencheng Bao</h1>
+        <div class="header-layout">
 
-        <p class="position">
-            Ph.D. Student in Civil and Environmental Engineering
-        </p>
+            <div class="header-content">
 
-        <p class="institution">
-            University of Illinois Urbana-Champaign
-        </p>
+                <h1>Wencheng Bao</h1>
 
-        <div class="profile-links">
+                <div class="profile-links">
 
-            <a href="mailto:wbao5@illinois.edu">
-                Email
-            </a>
+                    <a href="mailto:wbao5@illinois.edu">
+                        Email
+                    </a>
 
-            <!-- Replace YOUR_GITHUB_USERNAME with your actual GitHub username -->
-            <a
-                href="https://github.com/YOUR_GITHUB_USERNAME"
-                target="_blank"
-                rel="noopener noreferrer"
-            >
-                GitHub
-            </a>
+                    <a
+                        href="https://github.com/bwc021600"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                    >
+                        GitHub
+                    </a>
 
-            <a
-                href="https://scholar.google.com/citations?user=iFqunTgAAAAJ&amp;hl=en"
-                target="_blank"
-                rel="noopener noreferrer"
-            >
-                Google Scholar
-            </a>
+                    <a
+                        href="https://scholar.google.com/citations?user=iFqunTgAAAAJ&amp;hl=en"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                    >
+                        Google Scholar
+                    </a>
 
-        </div>
+                </div>
 
-        <p class="introduction">
-            My research focuses on transportation systems, electric mobility,
-            optimization under uncertainty, and infrastructure resilience. I
-            develop mathematical models, computational methods, and data-driven
-            approaches for transportation and energy applications.
-        </p>
+                <p class="position">
+                    Ph.D. Student in Civil and Environmental Engineering
+                </p>
 
-        <div class="header-actions">
+                <p class="institution">
+                    University of Illinois Urbana-Champaign
+                </p>
 
-            <a
-                class="button button-primary"
-                href="cv.pdf"
-                target="_blank"
-                rel="noopener noreferrer"
-            >
-                View CV
-            </a>
+                <p class="introduction">
+                    My research focuses on transportation systems, electric mobility,
+                    optimization under uncertainty, and infrastructure resilience. I
+                    develop mathematical models, computational methods, and data-driven
+                    approaches for transportation and energy applications.
+                </p>
 
-            <a class="button button-secondary" href="#projects">
-                Selected Work
-            </a>
+                <div class="header-actions">
+
+                    <a
+                        class="button button-primary"
+                        href="cv.pdf"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                    >
+                        View CV
+                    </a>
+
+                    <a class="button button-secondary" href="#projects">
+                        Selected Work
+                    </a>
+
+                </div>
+
+            </div>
+
+            <div class="photo-container">
+                <img
+                    class="profile-photo"
+                    src="images/headshot.png"
+                    alt="Portrait of Wencheng Bao"
+                    width="180"
+                    height="225"
+                    loading="eager"
+                    decoding="async"
+                >
+            </div>
 
         </div>
 
