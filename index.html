@@ -593,6 +593,29 @@
             font-weight: 600;
         }
 
+        .news-archive {
+            margin-top: 36px;
+        }
+
+        .news-archive h3 {
+            font-size: 1rem;
+            margin: 0 0 16px;
+        }
+
+        .news-year {
+            border-top: 1px solid var(--border);
+            padding: 16px 0;
+        }
+
+        .news-year summary {
+            cursor: pointer;
+            font-weight: 650;
+        }
+
+        .news-year .news-list {
+            margin-top: 24px;
+        }
+
         /* =========================
            Footer
         ========================== */
@@ -1086,9 +1109,9 @@
 <div class="section-content">
 <ul class="news-list">
 <li class="news-item">
-<div class="news-date">
+<time class="news-date" datetime="2026-10">
                                 October 2026
-                            </div>
+                            </time>
 <div>
 <p class="news-title">
                                     Traffic Safety Scholarship.
@@ -1100,9 +1123,9 @@
 </div>
 </li>
 <li class="news-item">
-<div class="news-date">
+<time class="news-date" datetime="2026-10">
                                 October 2026
-                            </div>
+                            </time>
 <div>
 <p class="news-title">
                                     2026 INFORMS TNA Best Student Paper Finalist (Top 3).
@@ -1122,9 +1145,9 @@
 </div>
 </li>
 <li class="news-item">
-<div class="news-date">
+<time class="news-date" datetime="2026-11">
                                 November 2026
-                            </div>
+                            </time>
 <div>
 <p class="news-title">
                                     Upcoming presentation at the 2026 INFORMS
@@ -1152,6 +1175,43 @@
 <script>
         document.getElementById("current-year").textContent =
             new Date().getFullYear();
+
+        // Add news to the list above with a YYYY-MM or YYYY-MM-DD datetime.
+        // Show the five newest entries; archive the rest by year.
+        const newsList = document.querySelector("#news .news-list");
+        const newsItems = Array.from(newsList.children);
+        const newsDate = (item) =>
+            item.querySelector("time[datetime]").getAttribute("datetime");
+
+        newsItems.sort((a, b) => newsDate(b).localeCompare(newsDate(a)));
+        newsList.replaceChildren(...newsItems.slice(0, 5));
+
+        if (newsItems.length > 5) {
+            const archive = document.createElement("div");
+            archive.className = "news-archive";
+            const heading = document.createElement("h3");
+            heading.textContent = "News Archive";
+            archive.append(heading);
+
+            const years = new Map();
+            newsItems.slice(5).forEach((item) => {
+                const year = newsDate(item).slice(0, 4);
+                if (!years.has(year)) {
+                    const group = document.createElement("details");
+                    group.className = "news-year";
+                    const summary = document.createElement("summary");
+                    summary.textContent = year;
+                    const list = document.createElement("ul");
+                    list.className = "news-list";
+                    group.append(summary, list);
+                    archive.append(group);
+                    years.set(year, list);
+                }
+                years.get(year).append(item);
+            });
+
+            newsList.after(archive);
+        }
 
         /* Keep only one research area open at a time. */
         const researchTopics = document.querySelectorAll(".research-topic");
